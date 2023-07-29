@@ -1,29 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TopMenu from './TopMenu';
-import Users from './Users';
-import Posts from './Posts';
-import Comments from './Comments';
+import DataTable from './DataTable';
 
 function App() {
-  const [part, setPart] = useState('users')
+  const API_URL = 'https://jsonplaceholder.typicode.com/'
+
+  const [tableData, setTableData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  const parts = ['users', 'posts', 'comments']
+  const [currentPart, setCurrentPart] = useState('users')
   const [fetchError, setFetchError] = useState(null)
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(`${API_URL}${currentPart}`)
+        if (!response.ok) throw Error("Did not receive expected data")
+        const listItems = await response.json()
+        setTableData(listItems)
+        setFetchError(null)
+      } catch (err) {
+        setFetchError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    setTimeout(() => {
+      (async () => await fetchItems())()
+    }, 2000)
+  }, [currentPart])
+
 
   return (
     <div>
       <TopMenu
-        part={part}
-        setPart={setPart}
+        parts={parts}
+        currentPart={currentPart}
+        setCurrentPart={setCurrentPart}
+        setIsLoading={setIsLoading}
       />
       <main>
 
         {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
-        {!fetchError &&
-          part === 'users' && <Users
-            setFetchError={setFetchError}
+        {isLoading && <p>Loading Data ...</p>}
+        {!fetchError && !isLoading &&
+          <DataTable
+            currentPart={currentPart}
+            tableData={tableData}
+
           />
         }
-        {!fetchError && part === 'posts' && <Posts />}
-        {!fetchError && part === 'comments' && <Comments />}
       </main>
     </div>
   );

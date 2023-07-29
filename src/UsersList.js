@@ -1,8 +1,7 @@
-import React from 'react'
-
-const UsersList = ({ usersList }) => {
+const UsersList = ({ tableData }) => {
+    console.log(JSON.stringify(tableData))
     return (
-        <table>
+        <>
             <thead>
                 <tr>
                     <td>id</td>
@@ -16,20 +15,20 @@ const UsersList = ({ usersList }) => {
                 </tr>
             </thead>
             <tbody>
-                {usersList.map((userItem) => (
-                    <tr key={userItem.id}>
-                        <td>{userItem.id}</td>
-                        <td>{userItem.name}</td>
-                        <td>{userItem.username}</td>
-                        <td>{userItem.email}</td>
-                        <td>{userItem.address.zipcode}</td>
-                        <td>{userItem.phone}</td>
-                        <td>{userItem.website}</td>
-                        <td>{userItem.company.name}</td>
+                {tableData.map((tableRow) => (
+                    <tr key={tableRow.id}>
+                        <td>{tableRow.id}</td>
+                        <td>{tableRow.name}</td>
+                        <td>{tableRow.username}</td>
+                        <td>{tableRow.email}</td>
+                        <td>{tableRow.address.zipcode}</td>
+                        <td>{tableRow.phone}</td>
+                        <td>{tableRow.website}</td>
+                        <td>{tableRow.company.name}</td>
                     </tr>
                 ))}
             </tbody>
-        </table>
+        </>
     )
 }
 

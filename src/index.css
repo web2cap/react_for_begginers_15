@@ -35,3 +35,14 @@ main {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+td {
+  border: #000 solid 1px;
+  border-right: #000 solid 1px;
+  border-bottom: #000 solid 1px;
+}
+
+thead {
+  font-weight: bold;
+  text-align: center;
+}

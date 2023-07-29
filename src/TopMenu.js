@@ -1,24 +1,19 @@
-const TopMenu = ({ part, setPart }) => {
+import TopMenuButton from "./TopMenuButton"
+
+const TopMenu = ({ parts, currentPart, setCurrentPart, setIsLoading }) => {
     return (
         <form onSubmit={(e) => e.preventDefault()}>
-            <button
-                className={part === 'users' ? 'selected' : ''}
-                onClick={(e) => setPart('users')}
-            >
-                users
-            </button>
-            <button
-                className={part === 'posts' ? 'selected' : ''}
-                onClick={(e) => setPart('posts')}
-            >
-                posts
-            </button>
-            <button
-                className={part === 'comments' ? 'selected' : ''}
-                onClick={(e) => setPart('comments')}
-            >
-                comments
-            </button>
+            {parts.map((btnName) => (
+                <TopMenuButton
+                    key={btnName}
+                    btnName={btnName}
+                    currentPart={currentPart}
+                    setCurrentPart={setCurrentPart}
+                    setIsLoading={setIsLoading}
+                />
+            ))
+
+            }
         </form>
     )
 }
