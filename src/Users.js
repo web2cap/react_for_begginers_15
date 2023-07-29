@@ -8,7 +8,6 @@ const Users = ({ setFetchError }) => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        console.log('useEffect')
         const fetchItems = async () => {
             try {
                 const response = await fetch(USER_URL)
